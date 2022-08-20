@@ -7,7 +7,6 @@
 
 // ======== OBJECTS DEFINITIONS ========
 // Define your objects here
-const habitats = [];
 const PROPS = [
   "species",
   "name",
@@ -83,6 +82,7 @@ function addFriend(friend) {
 dog.addFriend(cat);
 man.addFriend(cat);
 man.addFriend(woman);
+let habitats = [];
 habitats.push(dog, cat, man, woman, catWoman);
 // ======== OUTPUT ========
 habitats.forEach((habitat) => {
