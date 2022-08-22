@@ -7,140 +7,82 @@
 
 // ======== OBJECTS DEFINITIONS ========
 // Define your objects here
-const habitats = [];
-const PROPS = [
-  "species",
-  "name",
-  "gender",
-  "legs",
-  "hands",
-  "saying",
-  "friends",
-];
-const SPECIES = { DOG: "dog", CAT: "cat", HUMAN: "human" };
-const GENDER = { MALE: "male", FEMALE: "female" };
+
 class Habitat {
-  friends=[];
-  constructor (species,name,gender,legs/*,hands,*/,saying){
-
-  this.species = species;
-  this.name = name;
-  this.gender = gender;
-  this.legs = legs;
-  //this.hands = hands;
-  this.saying = saying;
-
+  static SPECIES = { DOG: "dog", CAT: "cat", HUMAN: "human" };
+  static GENDER = { MALE: "male", FEMALE: "female" };
+  friends = [];
+  PROPS = ["species", "name", "gender", "legs", "saying"];
+  constructor(species, name, gender, legs, saying) {
+    this.species = species;
+    this.name = name;
+    this.gender = gender;
+    this.legs = legs;
+    this.saying = saying;
   }
 
-addFriend (habitat){
-  if (!this.friends.includes (habitat)){
-    this.friends.push(habitat);
-  }
-  if (!habitat.friends.includes (this)){
-    habitat.friends.push (this);
-  }
-}
-
-toString (){
-
-      let info = [this.species, this.name, this.gender, this.legs,'0', this.saying].join("; ");
-      if (this.friends.length > 0) {
-        info += "; ";
-        let friendList = this.friends.reduce((list, friend) => {
-          list.push(friend.species + " " + friend.name);
-          return list;
-        }, []);
-
-        info += friendList.join(", ");
-      }
-      return info;
+  addFriend(habitat) {
+    if (!this.friends.includes(habitat)) {
+      this.friends.push(habitat);
     }
-}
-
-
-class Animal extends Habitat
-{
-  
-constructor (species,name,gender,legs,saying)
-  {
-    super(species,name,gender,legs,saying)
-  }
-
-}
-
-class Human extends Habitat{
-  constructor (name,gender,legs,hands,saying){
-  super(SPECIES.HUMAN,name, gender,legs,saying);
-  this.hands = hands;
-  
-  }
-  
-toString (){
-
-      let info = [this.species, this.name, this.gender, this.legs,this.hands, this.saying].join("; ");
-      if (this.friends.length > 0) {
-        info += "; ";
-        let friendList = this.friends.reduce((list, friend) => {
-          list.push(friend.species + " " + friend.name);
-          return list;
-        }, []);
-
-        info += friendList.join(", ");
-      }
-      return info;
+    if (!habitat.friends.includes(this)) {
+      habitat.friends.push(this);
     }
+  }
+
+  toString() {
+    let propsKeys = this.PROPS.map((key) => {
+      return this[key];
+    });
+    let info = propsKeys.join("; ");
+    if (this.friends.length > 0) {
+      info += "; ";
+      let friendList = this.friends.reduce((list, friend) => {
+        list.push(friend.species + " " + friend.name);
+        return list;
+      }, []);
+
+      info += friendList.join(", ");
+    }
+    return info;
+  }
 }
 
-class Dog extends Animal {
-constructor (name,gender,legs,saying){
-  super (SPECIES.DOG,name,gender,legs,saying)
-
-}
-}
-
-class Cat extends Animal {
-constructor (name,gender,legs,saying){
-  super (SPECIES.CAT,name,gender,legs,saying)
-
-}
+class Human extends Habitat {
+  constructor(name, gender, legs, hands, saying) {
+    super(Habitat.SPECIES.HUMAN, name, gender, legs, saying);
+    this.hands = hands;
+    this.PROPS.splice(this.PROPS.indexOf('legs'), 0, 'hands')
+    console.log(this.PROPS);
+  }
 }
 
+class Dog extends Habitat {
+  constructor(name, gender, legs, saying) {
+    super(Habitat.SPECIES.DOG, name, gender, legs, saying);
+  }
+}
+
+class Cat extends Habitat {
+  constructor(name, gender, legs, saying) {
+    super(Habitat.SPECIES.CAT, name, gender, legs, saying);
+  }
+}
 
 
-const dog = new Dog("Sharik", GENDER.MALE, 4, "gav-gav!");
-const cat = new Cat("Murka", GENDER.FEMALE, 4, "Myau");
-const man = new Human(
-  "Igor",
-  GENDER.MALE,
-  2,
-  2,
-  "Hello, everebody!"
-);
-
-const woman = new Human(
-  "Nata",
-  GENDER.FEMALE,
-  2,
-  2,
-  "Hi. My name is Nata"
-);
-
-const catWoman = new Human(
-  "Margo",
-  GENDER.FEMALE,
-  2,
-  2,
-  cat.saying
-);
+const dog = new Dog("Sharik", Habitat.GENDER.MALE, 4, "gav-gav!");
+const cat = new Cat("Murka", Habitat.GENDER.FEMALE, 4, "Myau");
+const man = new Human("Igor", Habitat.GENDER.MALE, 2, 2, "Hello, everebody!");
+const woman = new Human("Nata", Habitat.GENDER.FEMALE, 2, 2, "Hi. My name is Nata");
 
 
 dog.addFriend(cat);
 dog.addFriend(cat);
 man.addFriend(cat);
 man.addFriend(woman);
-habitats.push(dog, cat, man, woman, catWoman);
+
 // ======== OUTPUT ========
-habitats.forEach((habitat) => {
+[dog, cat, man, woman].forEach((habitat) => {
   print(habitat);
 });
 
