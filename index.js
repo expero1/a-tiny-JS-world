@@ -52,7 +52,7 @@ class Human extends Habitat {
   constructor(name, gender, legs, hands, saying) {
     super(Habitat.SPECIES.HUMAN, name, gender, legs, saying);
     this.hands = hands;
-    this.PROPS.splice(this.PROPS.indexOf('legs'), 0, 'hands')
+    this.PROPS.splice(this.PROPS.indexOf("legs"), 0, "hands");
     console.log(this.PROPS);
   }
 }
@@ -69,12 +69,16 @@ class Cat extends Habitat {
   }
 }
 
-
 const dog = new Dog("Sharik", Habitat.GENDER.MALE, 4, "gav-gav!");
 const cat = new Cat("Murka", Habitat.GENDER.FEMALE, 4, "Myau");
 const man = new Human("Igor", Habitat.GENDER.MALE, 2, 2, "Hello, everebody!");
-const woman = new Human("Nata", Habitat.GENDER.FEMALE, 2, 2, "Hi. My name is Nata");
-
+const woman = new Human(
+  "Nata",
+  Habitat.GENDER.FEMALE,
+  2,
+  2,
+  "Hi. My name is Nata"
+);
 
 dog.addFriend(cat);
 dog.addFriend(cat);
