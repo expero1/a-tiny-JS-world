@@ -31,20 +31,13 @@ class Habitat {
   }
 
   toString() {
-    let propsKeys = this.PROPS.map((key) => {
-      return this[key];
-    });
-    let info = propsKeys.join("; ");
-    if (this.friends.length > 0) {
-      info += "; ";
-      let friendList = this.friends.reduce((list, friend) => {
-        list.push(friend.species + " " + friend.name);
-        return list;
-      }, []);
-
-      info += friendList.join(", ");
-    }
-    return info;
+    const propsKeys = this.PROPS.map((key) => this[key]);
+    propsKeys.push(
+      this.friends
+        .map((friend) => `${friend.species} ${friend.name}`)
+        .join(", ")
+    );
+    return propsKeys.join("; ");
   }
 }
 
